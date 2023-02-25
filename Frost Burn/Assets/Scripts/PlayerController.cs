@@ -7,15 +7,20 @@ public class PlayerController : MonoBehaviour
 
     public float speedForce;
     public float jumpForce;
+    public float maxSpeed;
+
     private Rigidbody2D playerRB;
     public bool isGrounded;
 
     private float fallGrace = -2.5f;
+    private float frictionLand = 0.1f;
+    private float friction = 0.3f;
     
     // Start is called before the first frame update
     void Start()
     {
         playerRB = gameObject.GetComponent<Rigidbody2D>();
+
         isGrounded = true;
     }
 
@@ -37,27 +42,41 @@ public class PlayerController : MonoBehaviour
             || Input.GetKeyDown(KeyCode.UpArrow))
             && isGrounded)
         {
-            playerRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            isGrounded = false;
+            Jump();
         }
+
+        Vector2 currVelocity = playerRB.velocity;
+        playerRB.velocity = new Vector2(Mathf.Clamp(currVelocity.x, -maxSpeed, maxSpeed), currVelocity.y);
     }
 
-    // todo: prevent wall jumps / head collisions
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.gameObject.CompareTag("Ground"))
+
+        if (collision.collider.gameObject.CompareTag("Ground")
+            && collision.otherCollider.gameObject.CompareTag("Feet"))
         {
-            isGrounded = true;
+            Land();
+
+            // the following may cause issues?
+            gameObject.transform.SetParent(collision.collider.gameObject.transform, true);
         }
     }
+    
+    private void Land()
+    {
+        isGrounded = true;
+        playerRB.sharedMaterial.friction = friction;
+    }
 
-    // todo: prevent mid-air jumps after player falls off a ledge
-    /*
+    private void Jump()
+    {
+        playerRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        isGrounded = false;
+        playerRB.sharedMaterial.friction = frictionLand;
+    }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.otherCollider.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
-    } */
+        transform.parent = null;
+    } 
 }
