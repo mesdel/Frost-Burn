@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Feet
+  - Goal
+  - Death
   layers:
   - Default
   - TransparentFX

@@ -15,11 +15,14 @@ public class PlayerController : MonoBehaviour
     private float fallGrace = -2.5f;
     private float frictionLand = 0.1f;
     private float friction = 0.3f;
+
+    private GameManager gameManager;
     
     // Start is called before the first frame update
     void Start()
     {
         playerRB = gameObject.GetComponent<Rigidbody2D>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         isGrounded = true;
     }
@@ -78,5 +81,17 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         transform.parent = null;
-    } 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Goal"))
+        {
+            gameManager.Goal();
+        }
+        else if(collision.CompareTag("Death"))
+        {
+            gameManager.Death();
+        }
+    }
 }
