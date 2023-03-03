@@ -64,10 +64,14 @@ public class TempController : MonoBehaviour
 
     public void HeatContact(bool otherIsHot)
     {
-    
-        if (otherIsHot != isHot)
+        if (otherIsHot == isHot)
         {
             gameManager.Death();
         }
+    }
+
+    public bool AuraContact(bool otherIsHot)
+    {
+        return otherIsHot != isHot;
     }
 }

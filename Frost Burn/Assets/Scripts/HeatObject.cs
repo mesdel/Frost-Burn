@@ -5,6 +5,7 @@ using UnityEngine;
 public class HeatObject : MonoBehaviour
 {
     public bool isHot;
+    public bool isObstacle;
     TempController playerTemp;
 
     // Start is called before the first frame update
@@ -25,6 +26,15 @@ public class HeatObject : MonoBehaviour
             || collision.gameObject.CompareTag("Feet"))
         {
             playerTemp.HeatContact(isHot);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (isObstacle && collision.gameObject.CompareTag("Aura"))
+        {
+            if (playerTemp.AuraContact(isHot))
+                Destroy(gameObject);
         }
     }
 }
