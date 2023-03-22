@@ -2831,8 +2831,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1265346968}
-  - component: {fileID: 1265346967}
   - component: {fileID: 1265346969}
+  - component: {fileID: 1265346967}
+  - component: {fileID: 1265346970}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2849,7 +2850,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1265346966}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7339c2186726a04bab1ff05c30ec507, type: 3}
+  m_Script: {fileID: 11500000, guid: 24e9f13da626e3b47a0fec4740776789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1265346968
@@ -2880,6 +2881,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winPopup: {fileID: 756965946}
   losePopup: {fileID: 659864807}
+--- !u!114 &1265346970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265346966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c9a6617e28a7d41945c756f91d3be4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1304984687
 GameObject:
   m_ObjectHideFlags: 0
