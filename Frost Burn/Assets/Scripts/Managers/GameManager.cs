@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public bool gameOver { private set; get; }
+    public bool gameWon { private set; get; }
     public static GameManager instance;
     private bool gamePaused;
     KeyCode pauseKey;
@@ -15,9 +16,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         gamePaused = false;
         gameOver = false;
+        gameWon = false;
         instance = this;
 
-        // todo: possibly change
         // set pause key depending on editor/application
         pauseKey = KeyCode.Escape;
 #if UNITY_EDITOR
@@ -28,6 +29,9 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (gameWon)
+            return;
+
         if (!gameOver && Input.GetKeyDown(pauseKey))
         {
             if(gamePaused)
@@ -49,8 +53,9 @@ public class GameManager : MonoBehaviour
 
     public void Goal()
     {
+        gameWon = true;
         StopTime();
-        //UIManager.instance.GameWin();
+        UIManager.instance.GameWin();
         //DataSaver.instance.SaveProgress();
     }
 
@@ -58,7 +63,7 @@ public class GameManager : MonoBehaviour
     {
         gameOver = true;
         StopTime();
-        //UIManager.instance.GameOver();
+        UIManager.instance.GameOver();
     }
 
     private void StopTime()
@@ -70,14 +75,14 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         StopTime();
-        //UIManager.instance.PauseGame();
+        UIManager.instance.PauseGame();
     }
     public void ResumeGame ()
     {
         if(!gameOver)
         {
             Time.timeScale = 1;
-            //UIManager.instance.ResumeGame();
+            UIManager.instance.ResumeGame();
         }
     }
 

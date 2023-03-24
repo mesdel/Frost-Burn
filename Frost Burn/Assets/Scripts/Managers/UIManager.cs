@@ -9,7 +9,6 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    [SerializeField]
     private Transform gameMenus;
     private GameObject pauseMenu;
     private GameObject gameOverMenu;
@@ -31,13 +30,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Transform levelMenu;
 
-    private GameObject crosshair;
-
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
         audioSource = GetComponent<AudioSource>();
+        gameMenus = GameObject.Find("UI/Canvas/Menus").transform;
+
         if(SceneLoader.IsMainMenu())
         {
             StartCoroutine(InitSettings());
@@ -45,7 +44,6 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            crosshair = gameMenus.parent.Find("Crosshair").gameObject;
             InitMenus();
         }
     }
@@ -53,9 +51,9 @@ public class UIManager : MonoBehaviour
     private void InitMenus()
     {
         // find the three menus
-        winMenu = gameMenus.Find("Win Screen").gameObject;
-        gameOverMenu = gameMenus.Find("Game Over Screen").gameObject;
-        pauseMenu = gameMenus.Find("Pause Screen").gameObject;
+        winMenu = gameMenus.Find("Win Menu").gameObject;
+        gameOverMenu = gameMenus.Find("Game Over Menu").gameObject;
+        pauseMenu = gameMenus.Find("Pause Menu").gameObject;
         
         // add functionality to their buttons
         InitButtons();
@@ -92,7 +90,6 @@ public class UIManager : MonoBehaviour
             }
             else if (name.Equals("Next Level Button"))
             {
-                // todo: next level button
                 buttonFunction = SceneLoader.instance.NextLevel;
             }
             else
@@ -152,27 +149,23 @@ public class UIManager : MonoBehaviour
     public void PauseGame()
     {
         pauseMenu.SetActive(true);
-        crosshair.SetActive(false);
     }
 
     public void ResumeGame()
     {
         pauseMenu.SetActive(false);
-        crosshair.SetActive(true);
     }
 
     public void GameOver()
     {
         gameOverMenu.SetActive(true);
-        crosshair.SetActive(false);
-        audioSource.PlayOneShot(loseSound);
+        //audioSource.PlayOneShot(loseSound);
     }
 
     public void GameWin()
     {
         winMenu.SetActive(true);
-        crosshair.SetActive(false);
-        audioSource.PlayOneShot(winSound);
+        //audioSource.PlayOneShot(winSound);
     }
 
     // when the slider is edited, save update to Settings struct
