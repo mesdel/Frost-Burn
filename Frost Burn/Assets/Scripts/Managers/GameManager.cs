@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
         pauseKey = KeyCode.P;
 #endif
-        
+
     }
 
     private void Update()
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
         if (!gameOver && Input.GetKeyDown(pauseKey))
         {
-            if(gamePaused)
+            if (gamePaused)
             {
                 ResumeGame();
                 gamePaused = false;
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
                 gamePaused = true;
             }
         }
-        else if(gameOver && Input.GetKeyDown(KeyCode.R))
+        else if (gameOver && Input.GetKeyDown(KeyCode.R))
         {
             RestartLevel();
         }
@@ -77,9 +77,9 @@ public class GameManager : MonoBehaviour
         StopTime();
         UIManager.instance.PauseGame();
     }
-    public void ResumeGame ()
+    public void ResumeGame()
     {
-        if(!gameOver)
+        if (!gameOver)
         {
             Time.timeScale = 1;
             UIManager.instance.ResumeGame();

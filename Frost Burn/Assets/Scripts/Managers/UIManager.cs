@@ -37,9 +37,8 @@ public class UIManager : MonoBehaviour
     {
         instance = this;
         audioSource = GetComponent<AudioSource>();
-        gameMenus = GameObject.Find("UI/Canvas/Menus").transform;
 
-        if(SceneLoader.IsMainMenu())
+        if (SceneLoader.IsMainMenu())
         {
             StartCoroutine(InitSettings());
             StartCoroutine(InitializeLevelMenu());
@@ -52,6 +51,8 @@ public class UIManager : MonoBehaviour
 
     private void InitMenus()
     {
+        gameMenus = GameObject.Find("UI/Canvas/Menus").transform;
+
         // find the three menus
         winMenu = gameMenus.Find("Win Menu").gameObject;
         gameOverMenu = gameMenus.Find("Game Over Menu").gameObject;
@@ -77,11 +78,11 @@ public class UIManager : MonoBehaviour
         {
             UnityAction buttonFunction = null;
             string name = button.gameObject.name;
-            if(name.Equals("Restart Level Button"))
+            if (name.Equals("Restart Level Button"))
             {
                 buttonFunction = SceneLoader.instance.ReloadScene;
             }
-            else if(name.Equals("Main Menu Button"))
+            else if (name.Equals("Main Menu Button"))
             {
                 buttonFunction = SceneLoader.instance.LoadMainMenu;
             }
@@ -122,9 +123,6 @@ public class UIManager : MonoBehaviour
         sfxSlider.value = DataSaver.instance.sfxVolume;
         ambiSlider.value = DataSaver.instance.ambiVolume;
 
-        mouseSlider = settingsMenu.Find("Mouse Sensitivity").Find("Slider").GetComponent<Slider>();
-        mouseSlider.value = DataSaver.instance.sensitivity;
-
         Button saveButton = settingsMenu.Find("Save Button").GetComponent<Button>();
         saveButton.onClick.AddListener(DataSaver.instance.SaveSettings);
     }
@@ -137,9 +135,9 @@ public class UIManager : MonoBehaviour
         int levelsToUnlock = DataSaver.instance.levelsCompleted;
 
         // loop through unlockable levels and unlock them based on progress
-        foreach(Transform level in unlockableLevels)
+        foreach (Transform level in unlockableLevels)
         {
-            if(levelsToUnlock > 0)
+            if (levelsToUnlock > 0)
             {
                 level.GetComponent<Button>().interactable = true;
                 levelsToUnlock--;
@@ -179,10 +177,5 @@ public class UIManager : MonoBehaviour
         DataSaver.instance.musicVolume = musicSlider.value;
         DataSaver.instance.sfxVolume = sfxSlider.value;
         DataSaver.instance.ambiVolume = ambiSlider.value;
-    }
-
-    public void SaveSensitivity()
-    {
-        DataSaver.instance.sensitivity = mouseSlider.value;
     }
 }

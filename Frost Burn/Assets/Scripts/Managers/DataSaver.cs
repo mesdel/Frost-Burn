@@ -11,8 +11,6 @@ public class DataSaver : MonoBehaviour
     public float sfxVolume;
     public float musicVolume;
     public float ambiVolume;
-    private const float defaultSensitivity = 0.5f;
-    public float sensitivity;
     public int levelsCompleted;
 
     public bool isLoaded;
@@ -23,7 +21,6 @@ public class DataSaver : MonoBehaviour
         public float sfxVolume;
         public float musicVolume;
         public float ambiVolume;
-        public float sensitivity;
     }
 
     [System.Serializable]
@@ -61,14 +58,12 @@ public class DataSaver : MonoBehaviour
     {        
         // load slider values into Settings structure
         UIManager.instance.SaveVolumes();
-        UIManager.instance.SaveSensitivity();
 
         Settings settings = new Settings
         {
             ambiVolume = this.ambiVolume,
             sfxVolume = this.sfxVolume,
-            musicVolume = this.musicVolume,
-            sensitivity = this.sensitivity
+            musicVolume = this.musicVolume
         };
 
         string json = JsonUtility.ToJson(settings);
@@ -88,7 +83,6 @@ public class DataSaver : MonoBehaviour
             ambiVolume = settings.ambiVolume;
             musicVolume = settings.musicVolume;
             sfxVolume = settings.sfxVolume;
-            sensitivity = settings.sensitivity;
         }
         else
         {
@@ -99,7 +93,6 @@ public class DataSaver : MonoBehaviour
     private void LoadDefaultSettings()
     {
         ambiVolume = musicVolume = sfxVolume = defaultVolume;
-        sensitivity = defaultSensitivity;
     }
 
     public void SaveProgress()
