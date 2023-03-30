@@ -30,6 +30,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Transform levelMenu;
 
+    //todo: move audio into own class
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,8 +56,11 @@ public class UIManager : MonoBehaviour
         winMenu = gameMenus.Find("Win Menu").gameObject;
         gameOverMenu = gameMenus.Find("Game Over Menu").gameObject;
         pauseMenu = gameMenus.Find("Pause Menu").gameObject;
-        
+
         // add functionality to their buttons
+        winMenu.SetActive(true);
+        gameOverMenu.SetActive(true);
+        pauseMenu.SetActive(true);
         InitButtons();
 
         // hide the menues
@@ -67,8 +72,8 @@ public class UIManager : MonoBehaviour
     private void InitButtons()
     {
         Button[] buttons = gameMenus.GetComponentsInChildren<Button>();
-        
-        foreach(Button button in buttons)
+
+        foreach (Button button in buttons)
         {
             UnityAction buttonFunction = null;
             string name = button.gameObject.name;
@@ -159,13 +164,13 @@ public class UIManager : MonoBehaviour
     public void GameOver()
     {
         gameOverMenu.SetActive(true);
-        //audioSource.PlayOneShot(loseSound);
+        audioSource.PlayOneShot(loseSound);
     }
 
     public void GameWin()
     {
         winMenu.SetActive(true);
-        //audioSource.PlayOneShot(winSound);
+        audioSource.PlayOneShot(winSound);
     }
 
     // when the slider is edited, save update to Settings struct
